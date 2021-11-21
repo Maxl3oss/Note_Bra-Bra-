@@ -1,0 +1,79 @@
+* .env
+////
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=myblog (ชือ database)
+DB_USERNAME=root
+DB_PASSWORD=
+
+FIREBASE_CREDENTIALS=""
+FIREBASE_DATABASE_URL=""
+////
+
+* config \ database.php
+////
+(บรรทัดที่ 55 ให้เปลี่ยนเป็นแบบนี้)
+'charset' => 'utf8',
+'collation' => 'utf8_unicode_ci',
+////
+
+* database \ migrations \ user
+////
+(แก้ไข function up)
+public function up()
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name',64);
+            $table->string('email',64)->unique(); 
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password',64);
+            $table->text('address');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+    }
+(up เพิ่ม down ลบ unique ห้ามซ้ำ id เป็น function ทำ primary key auto)
+////
+
+* cmd in file project 
+////
+php artisan migrate
+(คำสั่ง migrate database เข้า mysql)
+
+php artisan migrate:rollback
+(คำสั่ง ย้อนประวัติการ migrate)
+
+php artisan migrate:refresh
+(คำสั่ง ลบข้อมูลทั้งหมดแล้วสร้างใหม่)
+////
+
+* create new migrations
+////
+(สร้าง migrations ใหม่)
+php artisan make:migration create_employees(ชื่อ)_table
+
+(เพิ่มตาราง)
+public function up()
+    {
+        Schema::create('employees', function (Blueprint $table) {
+            $table->id();
+            $table->String('fullname',120);
+            $table->String('gender',10);
+            $table->String('email',64)->unique();
+            $table->String('tel',24);
+            $table->String('age');
+            $table->String('address');
+            $table->String('avartar',128);
+            $table->integer('status');
+            $table->timestamps();
+        });
+    }
+( id(); คือ big int เก็บเลขได้เยอะ increments('id'); คือ int ปกติเก็บได้ 10 หลัก )
+////
+
+* cmd in file project
+////
+php artisan migrate
+////

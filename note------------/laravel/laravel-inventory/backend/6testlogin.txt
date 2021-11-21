@@ -1,0 +1,96 @@
+* Controllers \ AuthController
+////
+public function login(Request $request)
+    {
+        //validate field
+        $fields = $request->validate([
+            'email' => 'required|String',
+            'password' => 'required|String',
+        ]);
+
+        //check email
+        $user = User::Where('email', $fields['email'])->first();
+
+        //check password
+        if (!$user || !Hash::check($fields['password'], $user->password)) {
+            return response([
+                'message' => 'Invalid password',
+            ]);
+        } else {
+
+            //delete token
+            $user->tokens()->delete();
+
+            //Create Token
+            $token = $user->createToken('my-device')->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token,
+            ];
+            return response($response, 201);
+        }
+    }
+# Hash ถอดรหัส
+ check($fields['password'], $user->password)
+# เช็คในช่อง fields[password] ว่าถอดรหัสจาก database user[password] ตรงกันมั้ย
+////
+* routes \ api.php
+////
+Route::post('login', [AuthController::class, 'login']);
+////
+
+* test login
+////
+# POST
+127.0.0.1:8000/api/login
+{
+          "email": "user1@gmail.com",
+          "password": "123456",
+}
+
+# response
+{
+  "user": {
+    "id": 4,
+    "fullname": "User 1",
+    "username": "user1",
+    "email": "user1@gmail.com",
+    "email_verified_at": null,
+    "tel": "123456",
+    "role": 1,
+    "created_at": "2021-11-20T15:34:09.000000Z",
+    "updated_at": "2021-11-20T15:34:09.000000Z"
+  },
+  "token": "7|zKblDM0YgSZoSLbsafmZq6Hl2ojpQmJS7JKzUsxt"
+}
+////
+
+* test use token
+////
+# GET
+127.0.0.1:8000/api/products
+# Auth \ Bearer
+Bearer 5|hcS06O7oYV1Wqgu0EvwLsdkqGPnWOFgFrRs0xNrD
+# response
+[
+  {
+    "id": 1,
+    "name": "iphone 13 pro max",
+    "slug": "iphone-13-promax",
+    "description": null,
+    "price": "28000.00",
+    "created_at": "2021-11-19T13:18:20.000000Z",
+    "updated_at": "2021-11-19T13:18:20.000000Z"
+  },
+  {
+    "id": 2,
+    "name": "iphone 10 pro max",
+    "slug": "iphone-10-promax",
+    "description": "iphone 12 pro max detail",
+    "price": "21000.00",
+    "created_at": "2021-11-19T13:24:06.000000Z",
+    "updated_at": "2021-11-19T13:30:05.000000Z"
+  }
+]
+////

@@ -1,0 +1,4 @@
+* config \ app.php
+////
+'timezone' => 'Asia/Bangkok',
+////

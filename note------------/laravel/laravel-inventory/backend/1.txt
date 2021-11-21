@@ -1,0 +1,44 @@
+* creat project
+////
+composer create-project laravel/laravel backend
+////
+
+* extentions vscode
+////
+MySQL
+////
+
+* connect database at .env
+////
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=inventorydb
+DB_USERNAME=root
+DB_PASSWORD=
+////
+
+* create migrations
+////
+# สร้าง migrations Model และ Controllers พร้อมกัน
+php artisan make:model Product -mc --api
+php artisan make:model Product --migration --controller Product --api
+////
+
+* migrations create_users_table
+////
+$table->tinyInteger('role')->default(2); 
+# tiny คือ เลข 4 หลัด
+# ให้สิทธิ์เป็น 2 ผู้ใช้ 1 เป็น admin
+# เมื่อเพิ่มข้อมูลใน create_users_table ต้องไปเพิ่มใน Models User.php ด้วย
+////
+
+* สามารถ ชี้ตารางได้ กรณีชื่อไงตรง Models User.php 
+////
+$table = "user_company";
+////
+
+* migrate data
+////
+php artisan migrate
+////

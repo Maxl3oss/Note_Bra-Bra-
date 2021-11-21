@@ -1,0 +1,87 @@
+* cmd in file project
+////
+# ชื่อ model เริ่มตัวใหญ่ ไม่มีตัว s ตารางมี s
+(การสร้าง model ใหม่)
+php artisan make:model Employee
+
+(สร้าง model พร้อมไฟล์ migrate)
+php artisan make:model Employee --migration
+(ย่อ)
+php artisan make:model Employee -m
+////
+
+* route \ web.php
+////
+Route::get('employeelist',[HomeController::class,'employeelist']);
+////
+
+* App \ Http \ Controller \ HomeController.php
+////
+public function employeelist()
+    {
+        // การอ่านข้อมูลเข้าไปในตาราง ----------------------
+
+        // อ่านข้อมูลทั้งหมดจากตาราง -----------------------
+        // $employees = Employee::all(); // selete * from employees
+        // $employees = Employee::all(['id', 'fullname']);
+
+        //อ่านข้อมูล เพียงรายการเดียว
+        // $employees = Employee::all(['id', 'fullname']);
+
+        // อ่านข้อมูลแบบระบุบเงื่อนไข
+        // $employees = Employee::where('id', 3)->get();
+        // $employees = Employee::where('id', '>=', 2)->get();
+
+        //การจัดรียงข้อมูล
+        //$employees = Employee::where('age','>=',27)->orderByDesc('age')->get();
+
+        //การเพิ่มข้อมูลในตาราง
+        // $data = array(
+        //     'fullname' => 'Samit Koyom',
+        //     'gender' => 'Male',
+        //     'email' => 'samit@gmail.com',
+        //     'tel' => '06561551',
+        //     'age' => 38,
+        //     'address' => '20/2 moo.3 bangkok',
+        //     'avartar' => 'noavartar.jpg',
+        //     'status' => 1,
+        // );
+        // $employees = Employee::create($data);
+
+        //การแก้ไขข้อมูล ---------------------------------------
+        // $data = array(
+        //     'email' => 'samitkk@gmail.com',
+        //     'tel' => '065688888888',
+        //     'age' => 47,
+        // );
+        // $employees = Employee::where('id', 6)->update($data);
+
+        //การลบข้อมูลใน ----------------------------------------
+        // $employees = Employee::where('id', 6)->delete();
+        return $employees;
+    }
+////
+
+* App / Http / Models / Employee.php
+////
+(การอนุญาติ model การเพิ่ม แก้ไข ลบ)
+class Employee extends Model
+{
+    use HasFactory;
+
+    // protected $table = 'tbt_employee';
+    // protected $primaryKey = 'emp_id';
+    // public $timestamps = false;
+
+    protected $fillable = [
+        'fullname',
+        'gender',
+        'email',
+        'tel',
+        'age',
+        'address',
+        'avartar',
+        'status',
+    ];
+} 
+////

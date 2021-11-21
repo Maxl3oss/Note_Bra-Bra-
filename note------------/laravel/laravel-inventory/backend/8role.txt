@@ -1,0 +1,40 @@
+* เพิ่ม role ต้องสร้างและเข้าใช้งาน
+////
+public function register(Request $request)
+    {
+        //Create Token
+        $token = $user->createToken($request->userAgent(), ["$user->role"])->plainTextToken;
+
+    }
+
+public function login(Request $request)
+    {
+          //Create Token
+          $token = $user->createToken($request->userAgent(), ["$user->role"])->plainTextToken;
+    }
+////
+
+* check role 
+////
+ public function store(Request $request)
+    {
+        // เช็คสิทธิ์
+        // user ที่เชื่อมต่อขณะนี้
+        $user = auth()->user();
+
+        if ($user->tokenCan('1')) {
+            $user = auth()->user();
+
+            $request->validate([
+                'name' => 'required|min:5',
+                'slug' => 'required',
+                'price' => 'required',
+            ]);
+            return Product::create($request->all());
+        } else {
+            return [
+                'status' => 'Permission denied to create',
+            ];
+        }
+    }
+////

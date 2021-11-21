@@ -1,0 +1,8 @@
+* แก้การระบบ Devices \ AuthController
+////
+public function register(Request $request)
+{
+          //Create Token
+          $token = $user->createToken($request->userAgent())->plainTextToken;
+}
+////

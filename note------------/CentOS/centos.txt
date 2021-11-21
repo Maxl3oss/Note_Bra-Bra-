@@ -1,0 +1,16 @@
+
+
+server 
+yum update
+shutdown -h now
+
+firewall-cmd --state
+firewall-cmd --zone=home --list-all
+
+systemctl status httpd
+dnf install http
+
+
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+sudo firewall-cmd --reload

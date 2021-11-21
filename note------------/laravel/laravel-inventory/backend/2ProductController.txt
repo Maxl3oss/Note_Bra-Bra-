@@ -1,0 +1,51 @@
+* ProductController
+////
+public function index()
+    {
+        //Read all products
+        return Product::all();
+    }
+////
+
+* routes api.php
+////
+Route::resource('products', ProductController::class);
+////
+
+*  function store
+////
+{
+    $request->validate([
+        'name' => 'required|min:5',
+        'slug' => 'required',
+        'price' => 'required',
+    ]);
+return Product::create($request->all());
+}
+# validate ตรวจสอบ
+# required การเช็คค่าว่าง
+# min ห้ามต่ำว่า x จำนวน
+////
+
+* function show
+////
+public function show($id)
+    {
+        return Product::find($id);
+    }
+////-
+
+* function update
+////
+{
+        $product = Product::find($id);
+        $product->update($request->all());
+}
+////
+
+* function destroy
+////
+{
+        return Product::destroy($id);
+}
+////

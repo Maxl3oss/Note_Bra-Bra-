@@ -1,0 +1,52 @@
+* install sanctum
+////
+composer require larevel/sanctum
+////
+
+* create sanctum config and migratons file
+////
+php artisan vendor:publish --provider="larevel\Sanctum\SanctumServiceProvider"
+////
+
+* create_personal_access_tokens_table
+////
+{
+        Schema::create('personal_access_tokens', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('tokenable'); // 
+            $table->string('name');
+            $table->string('token', 64)->unique(); //sha256
+            $table->text('abilities')->nullable();
+            $table->timestamp('last_used_at')->nullable();
+            $table->timestamps();
+        });
+    }
+# morphs คือการสร้าง 2 filed -> tokenable_type varchar(255) -> tokenable_id bigint(20)
+////
+
+* config \ sanctum.php
+////
+# Expiration Minutes วันหมดอายุของ token 
+'expiration' => 7*24*60,
+# 7 วัน 24 ชั่วโมง 60 นาที
+////
+
+* migrate
+////
+php artisan migrate
+////
+
+* App \ Http \ Kernel
+////
+'api' => [
+\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+]
+////
+
+* Models \ User
+////
+use Laravel\Sanctum\HasApiTokens;
+class User extends Authentication {
+          use HasApiTokens, HasFactory, Notifiable;
+}
+////

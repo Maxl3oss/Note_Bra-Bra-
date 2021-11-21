@@ -1,0 +1,69 @@
+* route \ web.php
+////
+(เพิ่ม (:: คือ สัญลักษณ์ static) )
+Route::get('employees',[HomeController::class,'employees']);
+////
+
+* App \ Http \ Controller \ HomeController.php
+////
+(เพิ่ม)
+use Illuminate\Support\Facades\DB;
+
+public function employees()
+    {
+        //อ่านข้อมูลทั้งหมดจากตาราง employees-------------------------------------------
+        // $employees = DB::table('employees')->get(); //selete * from employees
+
+        //อ่านข้อมูลรายการเดียวจาก employees
+        // $employees = DB::table('employees')->first(); //selete * from employees limit 1
+
+        //อ่านข้อมูลที่ระบุบใน employees
+        // $employees = DB::table('employees')->first(['fullname', 'age']); // selete fullname, age from employees
+
+        //อ่านข้อมูลแบบระบบเงื่อนไข
+        // $employees = DB::table('employees')->where('id', 1)->get(['id', 'fullname', 'gender']);
+        // $employees = DB::table('employees')->where('id', '>=', 2)->get(); // มากกว่า 2 หรือเท่ากับ
+        // $employees = DB::table('employees')->where('id', 2)->where('status', 1)->where('age', 22)->get();
+
+        //ค้นหาแบบระบุบ id
+        // $employees = DB::table('employees')->find(3);
+
+        //นับแถว
+        // $employees = DB::table('employees')->count();
+
+        //การหาค่า สูง ต่ำ และค่าเฉลี่ย
+        // $employees = DB::table('employees')->max('age');
+        // $employees = DB::table('employees')->min('age');
+        // $employees = DB::table('employees')->avg('age');
+
+        //การจัดเรียงข้อมูล และเลือกข้อมูลบางส่วน
+        // $employees = DB::table('employees')->orderBy('age')->get(); // order asc
+        // $employees = DB::table('employees')->orderByDesc('age')->get(); // order desc
+        // $employees = DB::table('employees')->orderByDesc('age')->limit(1)->get();
+
+        //การเพิ่มข้อมูลในตาราง ---------------------------------------
+        // $data = array(
+        //     'fullname' => 'Samit Koyom',
+        //     'gender' => 'Male',
+        //     'email' => 'samit@gmail.com',
+        //     'tel' => '06561551',
+        //     'age' => 38,
+        //     'address' => '20/2 moo.3 bangkok',
+        //     'avartar' => 'noavartar.jpg',
+        //     'status' => 1,
+        // );
+        // $employees = DB::table('employees')->insert($data);
+
+        //การแก้ไขข้อมูลในตาราง --------------------------------------
+        // $data = array(
+        //     'email' => 'samitkk@gmail.com',
+        //     'tel' => '082502525',
+        //     'age' => 42,
+        // );
+        // $employees = DB::table('employees')->where('id', 4)->update($data);
+
+        //การลบข้อมูลในตาราง ----------------------------------------
+        //$employees = DB::table('employees')->where('id', 4)->delete();
+        return $employees;
+    }
+////

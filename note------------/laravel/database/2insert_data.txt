@@ -1,0 +1,66 @@
+* cmd in file project
+////
+php artisan make:seeder EmployeesSeeder
+(คำสั่ง สร้าง seeders)
+////
+
+* database \ seeders \ EmployeesSeeder
+////
+(เพิ่ม คือตัว query database เพิ่ม ลบ แก้ไข)
+use Illuminate\Support\Facades\DB;
+
+(แก้ไข ใน function run)
+ public function run()
+    {
+        DB::table('employees')->insert(
+            public function run()
+    {
+        DB::table('employees')->insert([
+            [
+                'fullname' => 'john Deo',
+                'gender' => 'male',
+                'email' => 'john@gmail.com',
+                'tel' => '084999999',
+                'age' => '20',
+                'address' => '8/80 moo.8 bangkok',
+                'avartar' => 'noavartar.jpg',
+                'status' => 1,
+            ],
+            [
+                'fullname' => 'Siriwan Kongman',
+                'gender' => 'female',
+                'email' => 'siriwan@gmail.com',
+                'tel' => '0828888888',
+                'age' => '22',
+                'address' => '8/70 moo.2 bangkok',
+                'avartar' => 'noavartar.jpg',
+                'status' => 1,
+            ],
+            [
+                'fullname' => 'สมชาย ใจดี',
+                'gender' => 'female',
+                'email' => 'somchai@gmail.com',
+                'tel' => '0825555555',
+                'age' => '28',
+                'address' => '2/50 moo.8 bangkok',
+                'avartar' => 'noavartar.jpg',
+                'status' => 1,
+            ],
+        ]);
+    }
+////
+
+* database \ seeders \ DatabaseSeeders
+////
+(เรียกใช้ function EmployeesSeeder)
+public function run()
+    {
+        $this->call(EmployeesSeeder::class);
+    }
+////
+
+* cmd in file project project
+////
+php artisan db:seed
+(เพิ่มข้อมูลตัวอย่างเข้า data base)
+////

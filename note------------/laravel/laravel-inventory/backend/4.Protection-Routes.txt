@@ -1,0 +1,7 @@
+* routes \ api.php 
+////
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::resource('products', ProductController::class);
+});
+# การเอา middleware protect routes products
+////

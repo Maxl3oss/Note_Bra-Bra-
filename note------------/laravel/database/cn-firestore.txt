@@ -1,0 +1,41 @@
+* cmd in file project
+////
+composer require kreait/laravel-firebase
+////
+
+* App \ config \ app.php
+////
+(เพิ่ม)
+'providers' => [
+        // ...
+        Kreait\Laravel\Firebase\ServiceProvider::class
+    ]
+////
+
+* cmd in file project
+////
+php artisan vendor:publish --provider="Kreait\Laravel\Firebase\ServiceProvider" --tag=config
+////
+
+* .env
+////
+(เพิ่ม)
+FIREBASE_CREDENTIALS=
+FIREBASE_DATABASE_URL=
+////
+
+* สร้าง firebase project 
+////
+(ไปที่ project settings -> Service account -> Firebase Admin SDK -> Create -> General new private key -> General key)
+
+(นำไฟล์ที่ได้ใส่ project นำชื่อไฟล์ ไปใส่ที่ .env)
+FIREBASE_CREDENTIALS="chat-message-e9ba0-firebase-adminsdk-3c0jq-d52a3ed236.json"
+
+(สร้าง Realtime database copy url ไปใส่ที่ .env)
+FIREBASE_DATABASE_URL="https://chat-message-e9ba0-default-rtdb.asia-southeast1.firebasedatabase.app/"
+////
+
+* เคลียร์แคช
+////
+php artisan optimize:clear
+////

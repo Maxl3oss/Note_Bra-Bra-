@@ -1,0 +1,4 @@
+* install-vur-cli
+////
+npm install -g @vue/cli
+////

@@ -1,0 +1,126 @@
+* cmd in file projects
+////
+php artisan make:controller PhotoController --resource
+php artisan make:controller PhotoController --api
+
+(ดูการใช้ api แบบ resource)
+php artisan route
+php artisan route:list --path=api
+////
+
+* routes \ api.php 
+////
+Route::resource('photos', PhotoController::class);
+Route::get('photos/search/{keyword}', [PhotoController::class, 'search']);
+////
+
+------------------------
+# GET
+http://127.0.0.1:8000/api/photos
+# เป็นการเรียก index
+{
+   return ['name' => 'Narongrid'];
+}
+{
+  "name": "Narongrid"
+}
+-------------------------
+
+# GET
+http://127.0.0.1:8000/api/photos/create
+# เป็นการเรียก create
+{
+        return ['name' => 'Create Product'];
+    }
+# การแสดงผล
+{
+  "name": "Create Product"
+}
+------------------------
+
+# POST
+http://127.0.0.1:8000/api/photos
+# in body 
+{
+    "id":"1",
+    "name":"Narongrid",
+    "product_price":"18500.00"
+}
+# เป็นการเรียก store 
+public function store(Request $request)
+    {
+        return ['name' => 'store',
+            'payload' => $request->all()];
+    }
+# การแสดงผล
+{
+  "name": "store",
+  "payload": {
+    "id": "1",
+    "name": "Narongrid",
+    "product_price": "18500.00"
+  }
+}
+------------------------
+
+# GET
+http://127.0.0.1:8000/api/photos/100
+# เป็นการเรียก show
+{
+   return ['name' => 'show','id' => $id];
+}
+# การแสดงผล
+{
+  "name": "show",
+  "id": "100"
+}
+-------------------------
+
+# GET
+http://127.0.0.1:8000/api/photos/5/edit
+# เป็นการเรียก edit
+{
+        return ['name' => 'edit','id' => $id];
+}
+# การแสดงผล 
+{
+  "name": "edit",
+  "id": "5"
+}
+-------------------------
+
+# PUT
+http://127.0.0.1:8000/api/photos/1
+# เป็นการเรียก update
+{
+        return ['name' => 'update',
+            'payload' => $request->all(),
+            'id' => $id];
+}
+# in body 
+{
+    "product_name": "Samsung S20",
+    "product_price": "12500.00"
+}
+# การแสดงผล
+{
+  "name": "update",
+  "payload": {
+    "product_name": "Samsung S20",
+    "product_price": "12500.00"
+  },
+  "id": "1"
+}
+-------------------------
+
+# DELETE
+http://127.0.0.1:8000/api/photos/1
+# เป็นการเรียก destroy
+{
+        return ['name' => 'destroy','id' => $id];
+}
+# การแสดงผล
+{
+        return "name": "destroy","id": "1"
+}
+-------------------------
